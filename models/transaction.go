@@ -81,6 +81,16 @@ func GetTransactions() ([]Transaction, error) {
 		if err != nil {
 			return nil, err
 		}
+		origin, err := GetWalletByPublicKey(transaction.Origin.PublicKey)
+		if err != nil {
+			return nil, err
+		}
+		target, err := GetWalletByPublicKey(transaction.Target.PublicKey)
+		if err != nil {
+			return nil, err
+		}
+		transaction.Origin = origin
+		transaction.Target = target
 		transactions = append(transactions, transaction)
 	}
 	return transactions, nil
